@@ -1,0 +1,34 @@
+
+{
+    "menu": {
+        "title": "何をしたいですか？",
+        "options": [
+            "1. タスクを追加",
+            "2. タスクを表示",
+            "3. タスクを更新",
+            "4. タスクを削除",
+            "5. 終了"
+        ],
+        "prompt": "選択肢を入力してください: "
+    },
+    "messages": {
+        "enter_task": "タスクを入力してください: ",
+        "todo_added": "タスクが正常に追加されました！",
+        "no_todos": "タスクが見つかりません！",
+        "your_todos": "あなたのタスク:",
+        "enter_number_update": "更新するタスクの番号を入力してください: ",
+        "enter_new_task": "新しいタスクを入力してください: ",
+        "is_done": "完了しましたか？ (yes/no): ",
+        "todo_updated": "タスクが正常に更新されました！",
+        "invalid_number": "無効な番号です！",
+        "invalid_input": "無効な入力です！",
+        "enter_number_delete": "削除するタスクの番号を入力してください: ",
+        "todo_deleted": "タスクが正常に削除されました！",
+        "goodbye": "さようなら！",
+        "invalid_choice": "無効な選択です！もう一度やり直してください。"
+    },
+    "status": {
+        "not_done": "✘",
+        "done": "✔"
+    }
+}

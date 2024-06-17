@@ -1,0 +1,34 @@
+
+{
+    "menu": {
+        "title": "What would you like to do?",
+        "options": [
+            "1. Add Todo",
+            "2. View Todos",
+            "3. Update Todo",
+            "4. Delete Todo",
+            "5. Exit"
+        ],
+        "prompt": "Enter your choice: "
+    },
+    "messages": {
+        "enter_task": "Enter the task: ",
+        "todo_added": "Todo added successfully!",
+        "no_todos": "No todos found!",
+        "your_todos": "Your Todos:",
+        "enter_number_update": "Enter the number of the todo to update: ",
+        "enter_new_task": "Enter the new task: ",
+        "is_done": "Is it done? (yes/no): ",
+        "todo_updated": "Todo updated successfully!",
+        "invalid_number": "Invalid number!",
+        "invalid_input": "Invalid input!",
+        "enter_number_delete": "Enter the number of the todo to delete: ",
+        "todo_deleted": "Todo deleted successfully!",
+        "goodbye": "Goodbye!",
+        "invalid_choice": "Invalid choice! Please try again."
+    },
+    "status": {
+        "not_done": "✘",
+        "done": "✔"
+    }
+}
