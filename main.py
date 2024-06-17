@@ -102,6 +102,20 @@ def delete_todo():
     except ValueError:
         print(Fore.RED + "\n" + LANG['messages']['invalid_input'] + "\n")
 
+
+def help():
+    help_text = """
+    コマンド一覧:
+    1. add (a)      - タスクを追加します
+    2. view (v)     - タスク一覧を表示します
+    3. update (u)   - タスクを更新します
+    4. delete (d)   - タスクを削除します
+    5. exit (e)     - プログラムを終了します
+    ?, help         - このヘルプメッセージを表示します
+    """
+    print(Fore.YELLOW + help_text)
+    
+
 def main():
     while True:
         display_menu()
@@ -117,6 +131,8 @@ def main():
         elif choice in ['5', 'exit', 'e']:
             print(Fore.GREEN + "\n" + LANG['messages']['goodbye'] + "\n")
             break
+        elif choice in ['?', 'help']:
+            help()
         else:
             print(Fore.RED + "\n" + LANG['messages']['invalid_choice'] + "\n")
 
