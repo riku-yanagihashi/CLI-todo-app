@@ -1,35 +1,38 @@
-
 {
     "menu": {
-        "title": "何をしたいですか？",
+        "title": "Todoリストメニュー",
         "options": [
             "1. タスクを追加",
-            "2. タスクを表示",
+            "2. タスク一覧を表示",
             "3. タスクを更新",
             "4. タスクを削除",
-            "5. 終了",
-            "?. ヘルプを表示"
+            "5. 終了"
         ],
         "prompt": "選択肢を入力してください: "
     },
     "messages": {
+        "enter_title": "タスクのタイトルを入力してください: ",
+        "enter_content": "タスクの内容を入力してください: ",
+        "enter_priority": "優先度を入力してください（低/中/高）: ",
         "enter_task": "タスクを入力してください: ",
-        "todo_added": "タスクが正常に追加されました！",
-        "no_todos": "タスクが見つかりません！",
+        "todo_added": "タスクが正常に追加されました!",
         "your_todos": "あなたのタスク:",
+        "no_todos": "タスクが見つかりません!",
         "enter_number_update": "更新するタスクの番号を入力してください: ",
-        "enter_new_task": "新しいタスクを入力してください: ",
-        "is_done": "完了しましたか？ (yes/no): ",
-        "todo_updated": "タスクが正常に更新されました！",
-        "invalid_number": "無効な番号です！",
-        "invalid_input": "無効な入力です！",
+        "enter_new_title": "新しいタスクのタイトルを入力してください: ",
+        "enter_new_content": "新しいタスクの内容を入力してください: ",
+        "enter_new_priority": "新しい優先度を入力してください（低/中/高）: ",
+        "is_done": "タスクは完了しましたか？（yes/no）: ",
+        "todo_updated": "タスクが正常に更新されました!",
         "enter_number_delete": "削除するタスクの番号を入力してください: ",
-        "todo_deleted": "タスクが正常に削除されました！",
-        "goodbye": "さようなら！",
-        "invalid_choice": "無効な選択です！もう一度やり直してください。"
+        "todo_deleted": "タスクが正常に削除されました!",
+        "invalid_number": "無効な番号です!",
+        "invalid_input": "無効な入力です!",
+        "goodbye": "さようなら!",
+        "invalid_choice": "無効な選択です!"
     },
     "status": {
-        "not_done": "✘",
-        "done": "✔"
+        "done": "[完了]",
+        "not_done": "[未完了]"
     }
 }

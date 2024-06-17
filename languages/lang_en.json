@@ -1,35 +1,38 @@
-
 {
     "menu": {
-        "title": "What would you like to do?",
+        "title": "Todo List Menu",
         "options": [
-            "1. Add Todo",
+            "1. Add a Todo",
             "2. View Todos",
-            "3. Update Todo",
-            "4. Delete Todo",
-            "5. Exit",
-            "?. Show Help"
+            "3. Update a Todo",
+            "4. Delete a Todo",
+            "5. Exit"
         ],
         "prompt": "Enter your choice: "
     },
     "messages": {
+        "enter_title": "Enter the title of the task: ",
+        "enter_content": "Enter the content of the task: ",
+        "enter_priority": "Enter the priority (low/medium/high): ",
         "enter_task": "Enter the task: ",
         "todo_added": "Todo added successfully!",
-        "no_todos": "No todos found!",
         "your_todos": "Your Todos:",
+        "no_todos": "No todos found!",
         "enter_number_update": "Enter the number of the todo to update: ",
-        "enter_new_task": "Enter the new task: ",
-        "is_done": "Is it done? (yes/no): ",
+        "enter_new_title": "Enter the new title of the task: ",
+        "enter_new_content": "Enter the new content of the task: ",
+        "enter_new_priority": "Enter the new priority (low/medium/high): ",
+        "is_done": "Is the task done? (yes/no): ",
         "todo_updated": "Todo updated successfully!",
-        "invalid_number": "Invalid number!",
-        "invalid_input": "Invalid input!",
         "enter_number_delete": "Enter the number of the todo to delete: ",
         "todo_deleted": "Todo deleted successfully!",
+        "invalid_number": "Invalid number!",
+        "invalid_input": "Invalid input!",
         "goodbye": "Goodbye!",
-        "invalid_choice": "Invalid choice! Please try again."
+        "invalid_choice": "Invalid choice!"
     },
     "status": {
-        "not_done": "✘",
-        "done": "✔"
+        "done": "✔",
+        "not_done": "✘"
     }
 }

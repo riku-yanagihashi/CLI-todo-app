@@ -1,6 +1,7 @@
 import json
 import os
 from colorama import init, Fore, Style
+from datetime import datetime
 
 init(autoreset=True)
 
@@ -50,9 +51,12 @@ def display_menu():
     print(Fore.GREEN + "="*40 + "\n")
 
 def add_todo():
-    task = input(Fore.CYAN + LANG['messages']['enter_task'])
+    title = input(Fore.CYAN + LANG['messages']['enter_title'])
+    content = input(Fore.CYAN + LANG['messages']['enter_content'])
+    priority = input(Fore.CYAN + LANG['messages']['enter_priority'])
+    date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     todos = load_todos()
-    todos.append({"task": task, "done": False})
+    todos.append({"title": title, "content": content, "priority": priority, "date_time": date_time, "done": False})
     save_todos(todos)
     print(Fore.GREEN + "\n" + LANG['messages']['todo_added'] + "\n")
 
@@ -64,8 +68,12 @@ def view_todos():
     print(Fore.GREEN + "\n" + LANG['messages']['your_todos'])
     print(Fore.GREEN + "-"*40)
     for index, todo in enumerate(todos, start=1):
-        status = Fore.RED + LANG['status']['not_done'] if not todo["done"] else Fore.GREEN + LANG['status']['done']
-        print(Fore.CYAN + f"{index}. {status} {todo['task']}")
+        status = Fore.RED + LANG['status']['not_done'] if not todo.get("done", False) else Fore.GREEN + LANG['status']['done']
+        priority = todo.get("priority", "low")
+        priority_marker = Fore.GREEN + "●" if priority == "low" else Fore.YELLOW + "●" if priority == "medium" else Fore.RED + "●"
+        title = Fore.WHITE + todo.get("title", "No Title")
+        date_time = Fore.WHITE + todo.get("date_time", "No Date")
+        print(Fore.CYAN + f"{index}. {status} {title} ({date_time}) {priority_marker}")
     print(Fore.GREEN + "-"*40 + "\n")
 
 def update_todo():
@@ -76,9 +84,12 @@ def update_todo():
     try:
         index = int(input(Fore.CYAN + LANG['messages']['enter_number_update'])) - 1
         if 0 <= index < len(todos):
-            todos[index]["task"] = input(Fore.CYAN + LANG['messages']['enter_new_task'])
+            todos[index]["title"] = input(Fore.CYAN + LANG['messages']['enter_new_title'])
+            todos[index]["content"] = input(Fore.CYAN + LANG['messages']['enter_new_content'])
+            todos[index]["priority"] = input(Fore.CYAN + LANG['messages']['enter_new_priority'])
             status = input(Fore.CYAN + LANG['messages']['is_done']).strip().lower()
             todos[index]["done"] = status == "yes"
+            todos[index]["date_time"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             save_todos(todos)
             print(Fore.GREEN + "\n" + LANG['messages']['todo_updated'] + "\n")
         else:
@@ -102,7 +113,6 @@ def delete_todo():
     except ValueError:
         print(Fore.RED + "\n" + LANG['messages']['invalid_input'] + "\n")
 
-
 def help():
     help_text = """
     コマンド一覧:
@@ -114,7 +124,6 @@ def help():
     ?, help         - このヘルプメッセージを表示します
     """
     print(Fore.YELLOW + help_text)
-    
 
 def main():
     while True:
