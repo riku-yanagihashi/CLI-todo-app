@@ -5,76 +5,106 @@ from datetime import datetime
 
 init(autoreset=True)
 
-DB_FILE = 'todos.json'
-CONFIG_FILE = 'config.json'
-LANG_DIR = 'languages'
-LANG_FILE = 'lang_en.json'
+DB_FILE = "todos.json"
+CONFIG_FILE = "config.json"
+LANG_DIR = "languages"
+LANG_FILE = "lang_en.json"
+
 
 def load_config():
     if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r') as file:
+        with open(CONFIG_FILE, "r") as file:
             return json.load(file)
     return {"language": "en"}
 
+
 def save_config(config):
-    with open(CONFIG_FILE, 'w') as file:
+    with open(CONFIG_FILE, "w") as file:
         json.dump(config, file, indent=4)
+
 
 def load_language():
     global LANG_FILE
     config = load_config()
-    if config['language'] == 'ja':
-        LANG_FILE = 'lang_ja.json'
+    if config["language"] == "ja":
+        LANG_FILE = "lang_ja.json"
     else:
-        LANG_FILE = 'lang_en.json'
-    with open(os.path.join(LANG_DIR, LANG_FILE), 'r') as file:
+        LANG_FILE = "lang_en.json"
+    with open(os.path.join(LANG_DIR, LANG_FILE), "r") as file:
         return json.load(file)
+
 
 LANG = load_language()
 
+
 def load_todos():
     if os.path.exists(DB_FILE):
-        with open(DB_FILE, 'r') as file:
+        with open(DB_FILE, "r") as file:
             return json.load(file)
     return []
 
+
 def save_todos(todos):
-    with open(DB_FILE, 'w') as file:
+    with open(DB_FILE, "w") as file:
         json.dump(todos, file, indent=4)
 
+
 def display_menu():
-    print(Fore.GREEN + "\n" + "="*40)
-    print(Fore.GREEN + " " + LANG['menu']['title'])
-    print("="*40)
-    for option in LANG['menu']['options']:
+    print(Fore.GREEN + "\n" + "=" * 40)
+    print(Fore.GREEN + " " + LANG["menu"]["title"])
+    print("=" * 40)
+    for option in LANG["menu"]["options"]:
         print(Fore.YELLOW + option)
-    print(Fore.GREEN + "="*40 + "\n")
+    print(Fore.GREEN + "=" * 40 + "\n")
+
 
 def add_todo():
-    title = input(Fore.CYAN + LANG['messages']['enter_title'])
-    content = input(Fore.CYAN + LANG['messages']['enter_content'])
-    priority = input(Fore.CYAN + LANG['messages']['enter_priority'])
-    date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    title = input(Fore.CYAN + LANG["messages"]["enter_title"])
+    content = input(Fore.CYAN + LANG["messages"]["enter_content"])
+    priority = input(Fore.CYAN + LANG["messages"]["enter_priority"])
+    date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     todos = load_todos()
-    todos.append({"title": title, "content": content, "priority": priority, "date_time": date_time, "done": False})
+    todos.append(
+        {
+            "title": title,
+            "content": content,
+            "priority": priority,
+            "date_time": date_time,
+            "done": False,
+        }
+    )
     save_todos(todos)
-    print(Fore.GREEN + "\n" + LANG['messages']['todo_added'] + "\n")
+    print(Fore.GREEN + "\n" + LANG["messages"]["todo_added"] + "\n")
+
 
 def view_todos():
     todos = load_todos()
     if not todos:
-        print(Fore.YELLOW + "\n" + LANG['messages']['no_todos'] + "\n")
+        print(Fore.YELLOW + "\n" + LANG["messages"]["no_todos"] + "\n")
         return
-    print(Fore.GREEN + "\n" + LANG['messages']['your_todos'])
-    print(Fore.GREEN + "-"*40)
+    print(Fore.GREEN + "\n" + LANG["messages"]["your_todos"])
+    print(Fore.GREEN + "-" * 40)
     for index, todo in enumerate(todos, start=1):
-        status = Fore.RED + LANG['status']['not_done'] if not todo.get("done", False) else Fore.GREEN + LANG['status']['done']
+        status = (
+            Fore.RED + LANG["status"]["not_done"]
+            if not todo.get("done", False)
+            else Fore.GREEN + LANG["status"]["done"]
+        )
         priority = todo.get("priority", "low")
-        priority_marker = Fore.GREEN + "●" if priority == "low" else Fore.YELLOW + "●" if priority == "medium" else Fore.RED + "●"
+        priority_marker = (
+            Fore.GREEN + "●"
+            if priority == "low" or priority == "l"
+            else (
+                Fore.YELLOW + "●"
+                if priority == "medium" or priority == "mid"
+                else Fore.RED + "●" if priority == "high" else "-"
+            )
+        )
         title = Fore.WHITE + todo.get("title", "No Title")
         date_time = Fore.WHITE + todo.get("date_time", "No Date")
         print(Fore.CYAN + f"{index}. {status} {title} ({date_time}) {priority_marker}")
-    print(Fore.GREEN + "-"*40 + "\n")
+    print(Fore.GREEN + "-" * 40 + "\n")
+
 
 def update_todo():
     view_todos()
@@ -82,20 +112,30 @@ def update_todo():
     if not todos:
         return
     try:
-        index = int(input(Fore.CYAN + LANG['messages']['enter_number_update'])) - 1
+        index = int(input(Fore.CYAN + LANG["messages"]["enter_number_update"])) - 1
         if 0 <= index < len(todos):
-            todos[index]["title"] = input(Fore.CYAN + LANG['messages']['enter_new_title'])
-            todos[index]["content"] = input(Fore.CYAN + LANG['messages']['enter_new_content'])
-            todos[index]["priority"] = input(Fore.CYAN + LANG['messages']['enter_new_priority'])
-            status = input(Fore.CYAN + LANG['messages']['is_done']).strip().lower()
-            todos[index]["done"] = status == "yes"
-            todos[index]["date_time"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            title = input(Fore.CYAN + LANG["messages"]["enter_new_title"]).strip()
+            content = input(Fore.CYAN + LANG["messages"]["enter_new_content"]).strip()
+            priority = input(Fore.CYAN + LANG["messages"]["enter_new_priority"]).strip()
+            status = input(Fore.CYAN + LANG["messages"]["is_done"]).strip().lower()
+
+            if title:
+                todos[index]["title"] = title
+            if content:
+                todos[index]["content"] = content
+            if priority:
+                todos[index]["priority"] = priority
+            if status:
+                todos[index]["done"] = status == "yes"
+
+            todos[index]["date_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             save_todos(todos)
-            print(Fore.GREEN + "\n" + LANG['messages']['todo_updated'] + "\n")
+            print(Fore.GREEN + "\n" + LANG["messages"]["todo_updated"] + "\n")
         else:
-            print(Fore.RED + "\n" + LANG['messages']['invalid_number'] + "\n")
+            print(Fore.RED + "\n" + LANG["messages"]["invalid_number"] + "\n")
     except ValueError:
-        print(Fore.RED + "\n" + LANG['messages']['invalid_input'] + "\n")
+        print(Fore.RED + "\n" + LANG["messages"]["invalid_input"] + "\n")
+
 
 def delete_todo():
     view_todos()
@@ -103,15 +143,16 @@ def delete_todo():
     if not todos:
         return
     try:
-        index = int(input(Fore.CYAN + LANG['messages']['enter_number_delete'])) - 1
+        index = int(input(Fore.CYAN + LANG["messages"]["enter_number_delete"])) - 1
         if 0 <= index < len(todos):
             todos.pop(index)
             save_todos(todos)
-            print(Fore.GREEN + "\n" + LANG['messages']['todo_deleted'] + "\n")
+            print(Fore.GREEN + "\n" + LANG["messages"]["todo_deleted"] + "\n")
         else:
-            print(Fore.RED + "\n" + LANG['messages']['invalid_number'] + "\n")
+            print(Fore.RED + "\n" + LANG["messages"]["invalid_number"] + "\n")
     except ValueError:
-        print(Fore.RED + "\n" + LANG['messages']['invalid_input'] + "\n")
+        print(Fore.RED + "\n" + LANG["messages"]["invalid_input"] + "\n")
+
 
 def help():
     help_text = """
@@ -125,25 +166,27 @@ def help():
     """
     print(Fore.YELLOW + help_text)
 
+
 def main():
     while True:
         display_menu()
-        choice = input(Fore.CYAN + LANG['menu']['prompt']).strip().lower()
-        if choice in ['1', 'add', 'a']:
+        choice = input(Fore.CYAN + LANG["menu"]["prompt"]).strip().lower()
+        if choice in ["1", "add", "a"]:
             add_todo()
-        elif choice in ['2', 'view', 'v']:
+        elif choice in ["2", "view", "v"]:
             view_todos()
-        elif choice in ['3', 'update', 'u']:
+        elif choice in ["3", "update", "u"]:
             update_todo()
-        elif choice in ['4', 'delete', 'd']:
+        elif choice in ["4", "delete", "d"]:
             delete_todo()
-        elif choice in ['5', 'exit', 'e']:
-            print(Fore.GREEN + "\n" + LANG['messages']['goodbye'] + "\n")
+        elif choice in ["5", "exit", "e"]:
+            print(Fore.GREEN + "\n" + LANG["messages"]["goodbye"] + "\n")
             break
-        elif choice in ['?', 'help']:
+        elif choice in ["?", "help"]:
             help()
         else:
-            print(Fore.RED + "\n" + LANG['messages']['invalid_choice'] + "\n")
+            print(Fore.RED + "\n" + LANG["messages"]["invalid_choice"] + "\n")
+
 
 if __name__ == "__main__":
     main()

@@ -21,7 +21,7 @@
         "enter_number_update": "更新するタスクの番号を入力してください: ",
         "enter_new_title": "新しいタスクのタイトルを入力してください: ",
         "enter_new_content": "新しいタスクの内容を入力してください: ",
-        "enter_new_priority": "新しい優先度を入力してください（低/中/高）: ",
+        "enter_new_priority": "新しい優先度を入力してください（low/mid/high）: ",
         "is_done": "タスクは完了しましたか？（yes/no）: ",
         "todo_updated": "タスクが正常に更新されました!",
         "enter_number_delete": "削除するタスクの番号を入力してください: ",
