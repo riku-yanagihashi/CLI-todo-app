@@ -21,6 +21,7 @@
         "enter_number_update": "Enter the number of the todo to update: ",
         "enter_new_title": "Enter the new title of the task: ",
         "enter_new_content": "Enter the new content of the task: ",
+        "press_enter_to_continue": "Press Enter to continue",
         "enter_new_priority": "Enter the new priority (low/mid/high): ",
         "is_done": "Is the task done? (yes/no): ",
         "todo_updated": "Todo updated successfully!",

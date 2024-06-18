@@ -47,9 +47,12 @@ def load_todos():
 def save_todos(todos):
     with open(DB_FILE, "w") as file:
         json.dump(todos, file, indent=4)
-
+        
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def display_menu():
+    clear_screen()
     print(Fore.GREEN + "\n" + "=" * 40)
     print(Fore.GREEN + " " + LANG["menu"]["title"])
     print("=" * 40)
@@ -59,6 +62,7 @@ def display_menu():
 
 
 def add_todo():
+    clear_screen()
     title = input(Fore.CYAN + LANG["messages"]["enter_title"])
     content = input(Fore.CYAN + LANG["messages"]["enter_content"])
     priority = input(Fore.CYAN + LANG["messages"]["enter_priority"])
@@ -78,6 +82,7 @@ def add_todo():
 
 
 def view_todos():
+    clear_screen()
     todos = load_todos()
     if not todos:
         print(Fore.YELLOW + "\n" + LANG["messages"]["no_todos"] + "\n")
@@ -138,6 +143,7 @@ def update_todo():
 
 
 def delete_todo():
+    clear_screen()
     view_todos()
     todos = load_todos()
     if not todos:
@@ -175,6 +181,7 @@ def main():
             add_todo()
         elif choice in ["2", "view", "v"]:
             view_todos()
+            input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
         elif choice in ["3", "update", "u"]:
             update_todo()
         elif choice in ["4", "delete", "d"]:
