@@ -98,8 +98,8 @@ def view_todos():
             if priority == "low" or priority == "l"
             else (
                 Fore.YELLOW + "●"
-                if priority == "medium" or priority == "mid"
-                else Fore.RED + "●" if priority == "high" else "-"
+                if priority == "medium" or priority == "mid" or priority == "m"
+                else Fore.RED + "●" if priority == "high" or priority == "h" else "-"
             )
         )
         title = Fore.WHITE + todo.get("title", "No Title")
@@ -178,6 +178,7 @@ def export_todos():
     print(Fore.GREEN + "\n" + LANG["messages"]["todos_exported"] + "\n")
 
 def help():
+    clear_screen()
     help_text = """
     コマンド一覧:
     1. add (a)      - タスクを追加します
