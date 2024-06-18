@@ -1,1 +1,4 @@
-# CLI-todo-app
+# CLIで動かすTodoアプリ
+
+CRUDだけ揃えてます
+
