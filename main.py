@@ -10,18 +10,15 @@ CONFIG_FILE = "config.json"
 LANG_DIR = "languages"
 LANG_FILE = "lang_en.json"
 
-
 def load_config():
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, "r") as file:
             return json.load(file)
     return {"language": "en"}
 
-
 def save_config(config):
     with open(CONFIG_FILE, "w") as file:
         json.dump(config, file, indent=4)
-
 
 def load_language():
     global LANG_FILE
@@ -33,9 +30,7 @@ def load_language():
     with open(os.path.join(LANG_DIR, LANG_FILE), "r") as file:
         return json.load(file)
 
-
 LANG = load_language()
-
 
 def load_todos():
     if os.path.exists(DB_FILE):
@@ -43,11 +38,10 @@ def load_todos():
             return json.load(file)
     return []
 
-
 def save_todos(todos):
     with open(DB_FILE, "w") as file:
         json.dump(todos, file, indent=4)
-        
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -60,13 +54,16 @@ def display_menu():
         print(Fore.YELLOW + option)
     print(Fore.GREEN + "=" * 40 + "\n")
 
-
 def add_todo():
     clear_screen()
-    title = input(Fore.CYAN + LANG["messages"]["enter_title"])
-    content = input(Fore.CYAN + LANG["messages"]["enter_content"])
-    priority = input(Fore.CYAN + LANG["messages"]["enter_priority"])
+    title = input(Fore.CYAN + LANG["messages"]["enter_title"]).strip()
+    if not title:
+        print(Fore.RED + LANG["messages"]["empty_title"])
+        return
+    content = input(Fore.CYAN + LANG["messages"]["enter_content"]).strip()
+    priority = input(Fore.CYAN + LANG["messages"]["enter_priority"]).strip().lower()
     date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    deadline = input(Fore.CYAN + LANG["messages"]["enter_deadline"]).strip()
     todos = load_todos()
     todos.append(
         {
@@ -74,12 +71,12 @@ def add_todo():
             "content": content,
             "priority": priority,
             "date_time": date_time,
+            "deadline": deadline,
             "done": False,
         }
     )
     save_todos(todos)
     print(Fore.GREEN + "\n" + LANG["messages"]["todo_added"] + "\n")
-
 
 def view_todos():
     clear_screen()
@@ -107,9 +104,9 @@ def view_todos():
         )
         title = Fore.WHITE + todo.get("title", "No Title")
         date_time = Fore.WHITE + todo.get("date_time", "No Date")
-        print(Fore.CYAN + f"{index}. {status} {title} ({date_time}) {priority_marker}")
+        deadline = Fore.WHITE + todo.get("deadline", "No Deadline")
+        print(Fore.CYAN + f"{index}. {status} {title} ({date_time}) {priority_marker} {deadline}")
     print(Fore.GREEN + "-" * 40 + "\n")
-
 
 def update_todo():
     view_todos()
@@ -122,6 +119,7 @@ def update_todo():
             title = input(Fore.CYAN + LANG["messages"]["enter_new_title"]).strip()
             content = input(Fore.CYAN + LANG["messages"]["enter_new_content"]).strip()
             priority = input(Fore.CYAN + LANG["messages"]["enter_new_priority"]).strip()
+            deadline = input(Fore.CYAN + LANG["messages"]["enter_new_deadline"]).strip()
             status = input(Fore.CYAN + LANG["messages"]["is_done"]).strip().lower()
 
             if title:
@@ -130,6 +128,8 @@ def update_todo():
                 todos[index]["content"] = content
             if priority:
                 todos[index]["priority"] = priority
+            if deadline:
+                todos[index]["deadline"] = deadline
             if status:
                 todos[index]["done"] = status == "yes"
 
@@ -140,7 +140,6 @@ def update_todo():
             print(Fore.RED + "\n" + LANG["messages"]["invalid_number"] + "\n")
     except ValueError:
         print(Fore.RED + "\n" + LANG["messages"]["invalid_input"] + "\n")
-
 
 def delete_todo():
     clear_screen()
@@ -159,6 +158,24 @@ def delete_todo():
     except ValueError:
         print(Fore.RED + "\n" + LANG["messages"]["invalid_input"] + "\n")
 
+def export_todos():
+    todos = load_todos()
+    if not todos:
+        print(Fore.YELLOW + "\n" + LANG["messages"]["no_todos"] + "\n")
+        return
+
+    with open("todos_export.md", "w") as file:
+        file.write("# To-Do List\n\n")
+        for todo in todos:
+            file.write(f"## {todo['title']}\n")
+            file.write(f"- Content: {todo['content']}\n")
+            file.write(f"- Priority: {todo['priority']}\n")
+            file.write(f"- Date: {todo['date_time']}\n")
+            deadline = todo.get('deadline', 'No Deadline')
+            file.write(f"- Deadline: {deadline}\n")
+            file.write(f"- Status: {'Done' if todo['done'] else 'Not Done'}\n")
+            file.write("\n")
+    print(Fore.GREEN + "\n" + LANG["messages"]["todos_exported"] + "\n")
 
 def help():
     help_text = """
@@ -167,11 +184,11 @@ def help():
     2. view (v)     - タスク一覧を表示します
     3. update (u)   - タスクを更新します
     4. delete (d)   - タスクを削除します
-    5. exit (e)     - プログラムを終了します
+    5. export (e)   - タスクをエクスポートします
+    6. exit (x)     - プログラムを終了します
     ?, help         - このヘルプメッセージを表示します
     """
     print(Fore.YELLOW + help_text)
-
 
 def main():
     while True:
@@ -186,14 +203,15 @@ def main():
             update_todo()
         elif choice in ["4", "delete", "d"]:
             delete_todo()
-        elif choice in ["5", "exit", "e"]:
+        elif choice in ["5", "export", "e"]:
+            export_todos()
+        elif choice in ["6", "exit", "x"]:
             print(Fore.GREEN + "\n" + LANG["messages"]["goodbye"] + "\n")
             break
         elif choice in ["?", "help"]:
             help()
         else:
             print(Fore.RED + "\n" + LANG["messages"]["invalid_choice"] + "\n")
-
 
 if __name__ == "__main__":
     main()
