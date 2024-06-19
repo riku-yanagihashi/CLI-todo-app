@@ -1,5 +1,7 @@
 README.md
 setup.py
+cli_todo_app/__init__.py
+cli_todo_app/main.py
 cli_todo_app.egg-info/PKG-INFO
 cli_todo_app.egg-info/SOURCES.txt
 cli_todo_app.egg-info/dependency_links.txt
