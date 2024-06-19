@@ -15,7 +15,7 @@ UIとか考えるのめんどいのでこれで
 1. GitHubリポジトリをクローンします。
 
 ```sh
-git clone <your-repository-url>
+git clone https://github.com/riku-yanagihashi/CLI-todo-app.git
 cd CLI-todo-app
 ```
 
