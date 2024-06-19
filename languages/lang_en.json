@@ -7,7 +7,8 @@
             "3. Update a task",
             "4. Delete a task",
             "5. Export tasks",
-            "6. Exit",
+            "6. Search tasks",
+            "7. Exit",
             "?, Help"
         ],
         "prompt": "Enter your choice: "
@@ -35,7 +36,11 @@
         "is_done": "Is the task done? (yes/no): ",
         "enter_number_delete": "Enter the task number to delete: ",
         "goodbye": "Goodbye!",
-        "press_enter_to_continue": "Press Enter to continue..."
+        "press_enter_to_continue": "Press Enter to continue...",
+        "enter_search_query": "Enter the search query: ",
+        "empty_search_query": "Search query cannot be empty!",
+        "no_matching_todos": "No matching tasks found.",
+        "matching_todos": "Here are the matching tasks:"
     },
     "status": {
         "done": "✔",

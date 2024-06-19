@@ -177,6 +177,47 @@ def export_todos():
             file.write("\n")
     print(Fore.GREEN + "\n" + LANG["messages"]["todos_exported"] + "\n")
 
+def search_todos():
+    clear_screen()
+    query = input(Fore.CYAN + LANG["messages"]["enter_search_query"]).strip().lower()
+    todos = load_todos()
+    if not query:
+        print(Fore.RED + LANG["messages"]["empty_search_query"])
+        return
+
+    matching_todos = [
+        todo for todo in todos
+        if query in todo["title"].lower() or query in todo["content"].lower()
+    ]
+
+    if not matching_todos:
+        print(Fore.YELLOW + "\n" + LANG["messages"]["no_matching_todos"] + "\n")
+        return
+
+    print(Fore.GREEN + "\n" + LANG["messages"]["matching_todos"])
+    print(Fore.GREEN + "-" * 40)
+    for index, todo in enumerate(matching_todos, start=1):
+        status = (
+            Fore.RED + LANG["status"]["not_done"]
+            if not todo.get("done", False)
+            else Fore.GREEN + LANG["status"]["done"]
+        )
+        priority = todo.get("priority", "low")
+        priority_marker = (
+            Fore.GREEN + "●"
+            if priority == "low" or priority == "l"
+            else (
+                Fore.YELLOW + "●"
+                if priority == "medium" or priority == "mid" or priority == "m"
+                else Fore.RED + "●" if priority == "high" or priority == "h" else "-"
+            )
+        )
+        title = Fore.WHITE + todo.get("title", "No Title")
+        date_time = Fore.WHITE + todo.get("date_time", "No Date")
+        deadline = Fore.WHITE + todo.get("deadline", "No Deadline")
+        print(Fore.CYAN + f"{index}. {status} {title} ({date_time}) {priority_marker} {deadline}")
+    print(Fore.GREEN + "-" * 40 + "\n")
+
 def help():
     clear_screen()
     help_text = """
@@ -186,7 +227,8 @@ def help():
     3. update (u)   - タスクを更新します
     4. delete (d)   - タスクを削除します
     5. export (e)   - タスクをエクスポートします
-    6. exit (x)     - プログラムを終了します
+    6. search (s)   - タスクを検索します
+    7. exit (x)     - プログラムを終了します
     ?, help         - このヘルプメッセージを表示します
     """
     print(Fore.YELLOW + help_text)
@@ -206,7 +248,10 @@ def main():
             delete_todo()
         elif choice in ["5", "export", "e"]:
             export_todos()
-        elif choice in ["6", "exit", "x"]:
+        elif choice in ["6", "search", "s"]:
+            search_todos()
+            input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
+        elif choice in ["7", "exit", "x"]:
             print(Fore.GREEN + "\n" + LANG["messages"]["goodbye"] + "\n")
             break
         elif choice in ["?", "help"]:
