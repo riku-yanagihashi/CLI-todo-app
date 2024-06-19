@@ -28,3 +28,9 @@ pip install .
 ```
 todo
 ```
+
+## 本ツールのアンインストール方法
+```sh
+pip uninstall cli_todo_app
+```
+なんか聞かれたら'yes'と入力してください
