@@ -4,19 +4,29 @@ UIとか考えるのめんどいのでこれで
 
 ## インストールと使用方法の確認
 
-1. GitHubリポジトリをクローンします。
+1. 以下のコマンドをインストールしたいディレクトリに移動してからターミナルに打ち込んでください。
 
 ```sh
+git clone https://github.com/riku-yanagihashi/CLI-todo-app.git && cd CLI-todo-app && pip install .
+```
+
+###  コマンドの説明
+```bash
 git clone https://github.com/riku-yanagihashi/CLI-todo-app.git
+```
+↑リポジトリをローカル上にクローンするコマンド
+
+```sh
 cd CLI-todo-app
 ```
+↑本ツールのディレクトリに移動するコマンド
 
-2. パッケージをインストールします
-```
+```sh
 pip install .
 ```
+↑必要なパッケージなどをインストールするコマンド
 
-3. 'todo'コマンドで実行
+3. 'todo'コマンドで起動
 ```
 todo
 ```
@@ -27,7 +37,7 @@ todo
 todo lang {使用したい言語}
 ```
 {使用したい言語}のなかに'en','ja'のどれかを入力すると変更される
-### 例
+### 例:
 ```
 todo lang ja
 ```
