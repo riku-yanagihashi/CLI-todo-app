@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from colorama import init, Fore, Style
 from datetime import datetime
 
@@ -30,6 +31,19 @@ def load_language():
     with open(os.path.join(LANG_DIR, LANG_FILE), "r") as file:
         return json.load(file)
 
+def update_language(language):
+    config = load_config()
+    if 'language' in config:
+        current_language = config['language']
+        if current_language != language:
+            config['language'] = language
+            save_config(config)
+            print(f"Language updated to {language}.")
+        else:
+            print(f"Language is already set to {language}.")
+    else:
+        print("Language key not found in config file.")
+        
 LANG = load_language()
 
 def load_todos():
@@ -234,30 +248,34 @@ def help():
     print(Fore.YELLOW + help_text)
 
 def main():
-    while True:
-        display_menu()
-        choice = input(Fore.CYAN + LANG["menu"]["prompt"]).strip().lower()
-        if choice in ["1", "add", "a"]:
-            add_todo()
-        elif choice in ["2", "view", "v"]:
-            view_todos()
-            input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
-        elif choice in ["3", "update", "u"]:
-            update_todo()
-        elif choice in ["4", "delete", "d"]:
-            delete_todo()
-        elif choice in ["5", "export", "e"]:
-            export_todos()
-        elif choice in ["6", "search", "s"]:
-            search_todos()
-            input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
-        elif choice in ["7", "exit", "x"]:
-            print(Fore.GREEN + "\n" + LANG["messages"]["goodbye"] + "\n")
-            break
-        elif choice in ["?", "help"]:
-            help()
-        else:
-            print(Fore.RED + "\n" + LANG["messages"]["invalid_choice"] + "\n")
+    if len(sys.argv) >= 3 and sys.argv[1] == 'lang':
+        new_language = sys.argv[2]
+        update_language(new_language)
+    else:
+        while True:
+            display_menu()
+            choice = input(Fore.CYAN + LANG["menu"]["prompt"]).strip().lower()
+            if choice in ["1", "add", "a"]:
+                add_todo()
+            elif choice in ["2", "view", "v"]:
+                view_todos()
+                input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
+            elif choice in ["3", "update", "u"]:
+                update_todo()
+            elif choice in ["4", "delete", "d"]:
+                delete_todo()
+            elif choice in ["5", "export", "e"]:
+                export_todos()
+            elif choice in ["6", "search", "s"]:
+                search_todos()
+                input(Fore.CYAN + LANG["messages"]["press_enter_to_continue"])
+            elif choice in ["7", "exit", "x"]:
+                print(Fore.GREEN + "\n" + LANG["messages"]["goodbye"] + "\n")
+                break
+            elif choice in ["?", "help"]:
+                help()
+            else:
+                print(Fore.RED + "\n" + LANG["messages"]["invalid_choice"] + "\n")
 
 if __name__ == "__main__":
     main()
