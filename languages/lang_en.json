@@ -40,7 +40,8 @@
         "enter_search_query": "Enter the search query: ",
         "empty_search_query": "Search query cannot be empty!",
         "no_matching_todos": "No matching tasks found.",
-        "matching_todos": "Here are the matching tasks:"
+        "matching_todos": "Here are the matching tasks:",
+        "invalid_language": "Invalid language choice!"
     },
     "status": {
         "done": "✔",
