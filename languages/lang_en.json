@@ -22,6 +22,7 @@
         "todo_added": "New task added successfully!",
         "todo_updated": "Task updated successfully!",
         "todo_deleted": "Task deleted successfully!",
+        "enter_numbers_delete": "Enter the numbers of the tasks you want to delete (comma-separated): ",
         "todos_exported": "Tasks exported successfully to todos_export.md!",
         "no_todos": "No tasks available.",
         "your_todos": "Here are your tasks:",

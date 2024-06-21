@@ -162,13 +162,19 @@ def delete_todo():
     if not todos:
         return
     try:
-        index = int(input(Fore.CYAN + LANG["messages"]["enter_number_delete"])) - 1
-        if 0 <= index < len(todos):
+        indexes = input(Fore.CYAN + LANG["messages"]["enter_numbers_delete"]).strip()
+        indexes = [int(i) - 1 for i in indexes.split(',') if i.isdigit()]
+        invalid_indexes = [i for i in indexes if not (0 <= i < len(todos))]
+        
+        if invalid_indexes:
+            print(Fore.RED + f"\n{LANG['messages']['invalid_number']} {', '.join(map(str, [i + 1 for i in invalid_indexes]))}\n")
+            return
+        
+        for index in sorted(indexes, reverse=True):
             todos.pop(index)
-            save_todos(todos)
-            print(Fore.GREEN + "\n" + LANG["messages"]["todo_deleted"] + "\n")
-        else:
-            print(Fore.RED + "\n" + LANG["messages"]["invalid_number"] + "\n")
+        
+        save_todos(todos)
+        print(Fore.GREEN + "\n" + LANG["messages"]["todo_deleted"] + "\n")
     except ValueError:
         print(Fore.RED + "\n" + LANG["messages"]["invalid_input"] + "\n")
 
@@ -279,3 +285,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
