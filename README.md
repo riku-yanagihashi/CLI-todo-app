@@ -6,7 +6,7 @@
 1. 以下のコマンドをインストールしたいディレクトリに移動してからターミナルに打ち込んでください。
 
 ```sh
-git clone https://github.com/riku-yanagihashi/CLI-todo-app.git && cd CLI-todo-app && pip install .
+git clone -- depth 1 https://github.com/riku-yanagihashi/CLI-todo-app.git ~/CLI-todo-app && cd ~/CLI-todo-app && pip install .
 ```
 
 ###  コマンドの説明
