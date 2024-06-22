@@ -1,15 +1,20 @@
 import json
 import os
+from os.path import expanduser
 import sys
 from colorama import init, Fore, Style
 from datetime import datetime
 
 init(autoreset=True)
 
+
+home = expanduser("~")
+
 DB_FILE = "todos.json"
 CONFIG_FILE = "config.json"
-LANG_DIR = "languages"
+LANG_DIR = os.path.expanduser("~/CLI-todo-app/languages")
 LANG_FILE = "lang_en.json"
+
 
 def load_config():
     if os.path.exists(CONFIG_FILE):
